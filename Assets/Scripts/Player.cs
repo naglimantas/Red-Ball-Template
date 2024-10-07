@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float maxSpeed = 10;
+    public float acceleration = 5;
     public float jumpSpeed = 10;
     Rigidbody2D rb;
 
@@ -18,7 +19,10 @@ public class Player : MonoBehaviour
             rb.velocity += Vector2.up * jumpSpeed;
         }
 
-        float hor = Input.GetAxisRaw("Horizontal");
-        rb.velocity += Vector2.right * hor * Time.deltaTime * moveSpeed;
+        if (rb.velocity.magnitude < maxSpeed)
+        {
+            float hor = Input.GetAxisRaw("Horizontal");
+            rb.velocity += Vector2.right * hor * Time.deltaTime * acceleration;
+        }
     }
 }

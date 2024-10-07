@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+[DefaultExecutionOrder(-10000)]
 public class CameraFollow : MonoBehaviour
 {
     public float speed;
