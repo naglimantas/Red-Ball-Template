@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
 
+[DefaultExecutionOrder(-10000)]
+
 public class CameraFollow : MonoBehaviour
 {
     public float speed;
