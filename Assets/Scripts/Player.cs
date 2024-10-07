@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public float acceleration = 5;
     public float jumpSpeed = 10;
     Rigidbody2D rb;
+    public bool isGrounded;
 
     void Start()
     {
@@ -14,15 +15,37 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity += Vector2.up * jumpSpeed;
         }
 
-        if (rb.velocity.magnitude < maxSpeed)
+        if (Mathf.Abs(rb.velocity.x) < maxSpeed)
         {
             float hor = Input.GetAxisRaw("Horizontal");
             rb.velocity += Vector2.right * hor * Time.deltaTime * acceleration;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        isGrounded = true;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.instance.Die();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.instance.Die();
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        isGrounded = false;
     }
 }
