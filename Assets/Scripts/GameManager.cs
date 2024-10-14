@@ -1,21 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] TMP_Text timerText;
+    [SerializeField] TMP_Text bestTimeText;
     public static GameManager instance;
+    public float levelTime;
+    float bestTime;
 
-
-    private void Awake()
+    void Awake()
     {
         instance = this;
+        bestTime = PlayerPrefs.GetFloat("bestTime", 9999999f);
+        bestTimeText.text = "Best:" + TimeSpan.FromSeconds(bestTime).ToString(@"mm\:ss\:ff");
     }
 
-    public void Die()
+    void Update()
     {
+        levelTime += Time.deltaTime;
+        timerText.text = TimeSpan.FromSeconds(levelTime).ToString(@"mm\:ss\:ff");
+    }
+
+    public void Win()
+    {
+        if (levelTime < bestTime)
+        {
+            bestTime = levelTime;
+            PlayerPrefs.SetFloat("bestTime", bestTime);
+        }
+    }
+
+    public async void Die()
+    {
+        await new WaitForSeconds(2f);
         var name = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(name);
     }
