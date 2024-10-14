@@ -16,13 +16,13 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         bestTime = PlayerPrefs.GetFloat("bestTime",float.MaxValue);
-        bestTimeText.text = "Best:" + TimeSpan.FromSeconds(bestTime).ToString(@"mm\:ss");
+        bestTimeText.text = "Best:" + TimeSpan.FromSeconds(bestTime).ToString(@"mm\:ss\:f");
     }
 
     void Update()
     {
         levelTime += Time.deltaTime;
-        timerText.text = TimeSpan.FromSeconds(levelTime).ToString(@"mm\:ss");
+        timerText.text = TimeSpan.FromSeconds(levelTime).ToString(@"mm\:ss\:f");
     }
 
     public void Win()
@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Die()
+    public async void Die()
     {
+        await new WaitForSeconds(2f);
         var name = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(name);
     }

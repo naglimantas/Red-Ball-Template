@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float jumpSpeed = 10;
     Rigidbody2D rb;
     public bool isGrounded;
+    public GameObject playerPiece;
 
     void Start()
     {
@@ -32,6 +33,12 @@ public class Player : MonoBehaviour
         isGrounded = true;
         if (other.gameObject.CompareTag("Enemy"))
         {
+            for (int i = 0; i < 10; i++)
+            {
+                var pos = transform.position + Random.insideUnitSphere;
+                Instantiate(playerPiece,pos,transform.rotation);
+            }
+            gameObject.SetActive(false);
             GameManager.instance.Die();
         }
     }
