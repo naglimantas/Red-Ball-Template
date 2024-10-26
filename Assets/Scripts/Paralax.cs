@@ -13,7 +13,7 @@ public class Paralax : MonoBehaviour
     void LateUpdate()
     {
         var pos = cam.transform.position / scale;
-        pos.z = 0;
+        pos.z = -1;
         transform.position = pos;
     }
 }

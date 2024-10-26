@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        bestTime = PlayerPrefs.GetFloat("bestTime",float.MaxValue);
+        bestTime = PlayerPrefs.GetFloat("bestTime",999999999f);
         bestTimeText.text = "Best:" + TimeSpan.FromSeconds(bestTime).ToString(@"mm\:ss\:f");
     }
 
